@@ -1,5 +1,4 @@
 # Shortest path between cabinets
-This is my test repo for Golang
 
 Второй этаж на Кронве (часть)
 <p align="center">
