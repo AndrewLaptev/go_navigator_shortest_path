@@ -1,4 +1,4 @@
-module github.com/AndrewLaptev/test_go
+module github.com/AndrewLaptev/navigator_shortest_path
 
 go 1.17
 
