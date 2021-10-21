@@ -2,6 +2,9 @@
 This is my test repo for Golang
 
 Второй этаж на Кронве (часть)
+<p align="center">
+  <img src="https://github.com/AndrewLaptev/test_go/blob/main/2_floor.png"/>
+</p>
 L-вершин - 2 (лестницы вверх и вниз)
 A-вершин - 26 (аудитории и туалет)
 B-опорных вершин - 9
