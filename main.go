@@ -5,14 +5,21 @@ import (
 	"fmt"
 	"log"
 	"os"
+	"strconv"
 	"strings"
 
 	"github.com/RyanCarrier/dijkstra"
 )
 
+const (
+	nameSymbFile = "graph_symbolic.txt"
+	nameNumFile  = "graph_numeric.txt"
+)
+
 func main() {
+
 	// fmt.Println("Shortest distance ", best.Distance, " following path ", best.Path)
-	fmt.Println(graphFromSymbToNum("graph_symbolic.txt"))
+	fmt.Println(createMapSymbNum("graph_symbolic.txt"))
 }
 
 func shortestPath(nameGraphFile string, src, dst int) (int64, []int) {
@@ -24,10 +31,11 @@ func shortestPath(nameGraphFile string, src, dst int) (int64, []int) {
 	return best.Distance, best.Path
 }
 
-func graphFromSymbToNum(nameSymbFile string /*, nameNumFile string*/) map[string]int {
+func createMapSymbNum(symbFile string) (map[string]int, map[int][]string) {
 	var vertexSymbToNum = make(map[string]int)
+	var arcsNumToSymb = make(map[int][]string)
 
-	fileSymb, err := os.Open(nameSymbFile)
+	fileSymb, err := os.Open(symbFile)
 	if err != nil {
 		panic(err)
 	}
@@ -35,8 +43,29 @@ func graphFromSymbToNum(nameSymbFile string /*, nameNumFile string*/) map[string
 
 	scanner := bufio.NewScanner(fileSymb)
 	for i := 0; scanner.Scan(); i++ {
-		vertexSymbToNum[strings.Split(scanner.Text(), " ")[0]] += i
+		vertexSymbName := strings.Split(scanner.Text(), " ")[0]
+		arcsNumName := strings.Split(scanner.Text(), " ")[1:]
+		
+		for _, s := range arcsNumName {
+			s[0] = 
+		}
+		vertexSymbToNum[vertexSymbName] += i
+		arcsNumToSymb[vertexSymbToNum[vertexSymbName]] = arcsSymbName
 	}
 
-	return vertexSymbToNum
+	return vertexSymbToNum, arcsNumToSymb
+}
+
+func createUndirGraphNumFile(mapVertexSymbToNum map[string]int, mapArcsSymb map[int][]string, numFile string) {
+	var str string
+
+	fileNum, err := os.Create(numFile)
+	if err != nil {
+		panic(err)
+	}
+	defer fileNum.Close()
+
+	for i, v := range mapArcsSymb {
+		str = strconv.Itoa(i) + " "
+	}
 }
