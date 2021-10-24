@@ -5,7 +5,6 @@ import (
 	"fmt"
 	"log"
 	"os"
-	"strconv"
 	"strings"
 
 	"github.com/RyanCarrier/dijkstra"
@@ -17,9 +16,14 @@ const (
 )
 
 func main() {
+	fileSymb, err := os.Open(nameSymbFile)
+	if err != nil {
+		panic(err)
+	}
+	defer fileSymb.Close()
 
 	// fmt.Println("Shortest distance ", best.Distance, " following path ", best.Path)
-	fmt.Println(createMapSymbNum("graph_symbolic.txt"))
+	fmt.Println(createMapVertsSymbNum(fileSymb))
 }
 
 func shortestPath(nameGraphFile string, src, dst int) (int64, []int) {
@@ -31,41 +35,40 @@ func shortestPath(nameGraphFile string, src, dst int) (int64, []int) {
 	return best.Distance, best.Path
 }
 
-func createMapSymbNum(symbFile string) (map[string]int, map[int][]string) {
-	var vertexSymbToNum = make(map[string]int)
-	var arcsNumToSymb = make(map[int][]string)
+// Create map of graph vertexs from symbolic file to numeric list
+// должна вернуть все таки две мапы: мапа вершин назв-номер и мапу ребер вершин номер верш-строковый массив ребер
+func createMapVertsSymbNum(symbFileName *os.File) map[string]int {
+	var mapVertsSymbNum = make(map[string]int)
 
-	fileSymb, err := os.Open(symbFile)
-	if err != nil {
-		panic(err)
-	}
-	defer fileSymb.Close()
-
-	scanner := bufio.NewScanner(fileSymb)
+	scanner := bufio.NewScanner(symbFileName)
 	for i := 0; scanner.Scan(); i++ {
-		vertexSymbName := strings.Split(scanner.Text(), " ")[0]
-		arcsNumName := strings.Split(scanner.Text(), " ")[1:]
-		
-		for _, s := range arcsNumName {
-			s[0] = 
-		}
-		vertexSymbToNum[vertexSymbName] += i
-		arcsNumToSymb[vertexSymbToNum[vertexSymbName]] = arcsSymbName
+		vertSymb := strings.Split(scanner.Text(), " ")[0]
+		mapVertsSymbNum[vertSymb] += i
 	}
 
-	return vertexSymbToNum, arcsNumToSymb
+	return mapVertsSymbNum
 }
 
-func createUndirGraphNumFile(mapVertexSymbToNum map[string]int, mapArcsSymb map[int][]string, numFile string) {
-	var str string
+func createMapDirGraph(mapVerts map[string]int, mapVertsArcs map[int][]string) map[int][]int {
 
-	fileNum, err := os.Create(numFile)
+}
+
+// Create numeric map vertexs and arcs of graph from symbolic file.
+// For undir graph arcs are duplicated
+func createMapNumUndirGraph(symbFileName *os.File, mapVertsSymbNum map[string]int) map[int]int {
+	var mapNumUndirGraph = make(map[int]int)
+	return mapNumUndirGraph
+}
+
+func createUndirGraphNumFile(mapVertsSymbNum map[string]int, fileName string) {
+	file, err := os.Create(fileName)
 	if err != nil {
 		panic(err)
 	}
-	defer fileNum.Close()
+	defer file.Close()
 
-	for i, v := range mapArcsSymb {
-		str = strconv.Itoa(i) + " "
+	mapVertsArcs := make(map[int][]string)
+	for i, v := range mapVertsSymbNum {
+		mapVertsArcs[v] =
 	}
 }
